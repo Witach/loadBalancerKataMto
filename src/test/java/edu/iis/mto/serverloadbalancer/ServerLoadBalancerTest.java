@@ -7,13 +7,12 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.BiFunction;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static edu.iis.mto.serverloadbalancer.ArgumentsForBalanceTestBuilder.argumentsForBalanceTestBuilder;
 import static edu.iis.mto.serverloadbalancer.CurrentLoadPercentageMatcher.hasLoadPercentageOf;
 import static edu.iis.mto.serverloadbalancer.ServerBuilder.server;
-import static edu.iis.mto.serverloadbalancer.ServerShouldContainPredicate.getPredicateFromServerAndVmsIndexes;
+import static edu.iis.mto.serverloadbalancer.ServerShouldContainPredicate.getPredicateFromIndexes;
 import static edu.iis.mto.serverloadbalancer.ServerVmsCountMatcher.hasVmsCountOf;
 import static edu.iis.mto.serverloadbalancer.VmBuilder.vm;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -116,21 +115,18 @@ public class ServerLoadBalancerTest {
 
 
     private static Stream<Arguments> provideArgsForBalance_serversAndVms() {
-        Server[] servers = getListOfServersWithCapacity(4, 6);
-        Vm[] vms = getListOfVmsWithSize(1, 4, 2);
-        List<Double> percentages = List.of(
-                75.0d,
-                66.66d
-        );
 
-        List<ServerShouldContainPredicate> serverShouldContainPredicates = List.of(
-                getPredicateFromServerAndVmsIndexes(0, 0, 2),
-                getPredicateFromServerAndVmsIndexes(1, 1)
-        );
+        Arguments arguments = argumentsForBalanceTestBuilder()
+                .withServers(getListOfServersWithCapacity(4, 6))
+                .withVms(getListOfVmsWithSize(1, 4, 2))
+                .withPercentages( List.of(75.0d, 66.66d))
+                .addServerShouldContainPredicate(getPredicateFromIndexes(0, 0, 2))
+                .addServerShouldContainPredicate(getPredicateFromIndexes(1, 1))
+                .build();
 
 
         return Stream.of(
-                Arguments.of(servers, percentages, vms, serverShouldContainPredicates)
+                arguments
         );
     }
 

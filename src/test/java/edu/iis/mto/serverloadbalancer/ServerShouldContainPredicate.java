@@ -32,7 +32,7 @@ public class ServerShouldContainPredicate {
         return indexPrompt + vmsIndexes;
     }
 
-    public static ServerShouldContainPredicate getPredicateFromServerAndVmsIndexes(int serverIndex, Integer ...vmsIndexes){
+    public static ServerShouldContainPredicate getPredicateFromIndexes(int serverIndex, Integer ...vmsIndexes){
         return new ServerShouldContainPredicate(serverIndex, Arrays.asList(vmsIndexes));
     }
 
