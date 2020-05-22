@@ -1,5 +1,7 @@
 package edu.iis.mto.serverloadbalancer;
 
+import org.junit.jupiter.api.Test;
+
 import static edu.iis.mto.serverloadbalancer.CurrentLoadPercentageMatcher.hasLoadPercentageOf;
 import static edu.iis.mto.serverloadbalancer.ServerBuilder.server;
 import static edu.iis.mto.serverloadbalancer.ServerVmsCountMatcher.hasVmsCountOf;
@@ -7,7 +9,7 @@ import static edu.iis.mto.serverloadbalancer.VmBuilder.vm;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
-import org.junit.Test;
+
 
 public class ServerLoadBalancerTest extends ServerLoadBalancerBaseTest {
 	@Test
